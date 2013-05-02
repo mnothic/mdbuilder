@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# $FreeBSD: ports/mail/dovecot/files/dovecot.sh.in,v 1.4 2008/04/22 15:32:49 ehaupt Exp $
+#
+
+# PROVIDE: mdbuilder
+# REQUIRE: DAEMON
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf to enable mdbuilder:
+#
+# mdbulder_enable="YES"
+# # optional
+# mdbuilder_flags="-d -c /usr/local/etc/mdbuilder.conf"
+# mdbuilder_user="vmail"
+# mdbuilder_group="vmail"
+
+. /etc/rc.subr
+
+# Set some defaults
+mdbuilder_enable=${mdbuilder_enable:-"NO"}
+mdbuilder_flags=${mdbuilder_flags:-"-d -c /usr/local/etc/mdbuilder.conf"}
+mdbuilder_user=${mdbuilder_user:-"vmail"}
+mdbuilder_group=${mdbuilder_group:-"vmail"}
+
+name=mdbuilder
+required_files=/usr/local/etc/mdbuilder.conf
+rcvar=`set_rcvar`
+command=/usr/local/bin/${name}
+load_rc_config ${name}
+
+run_rc_command "$1"
+
